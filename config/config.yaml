@@ -1,0 +1,104 @@
+data:
+  file_path: "data/Telecom_Customers_Churn.csv"
+  target_column: "Churn"
+
+# =======================================
+# Preprocessing Settings
+# =======================================
+
+preprocessing:
+
+  # Columns to drop entirely
+  drop_columns:
+    - customerID
+
+  # Binary Yes/No columns to encode
+  binary_features:
+    - Partner
+    - Dependents
+    - PhoneService
+    - MultipleLines
+    - OnlineSecurity
+    - OnlineBackup
+    - DeviceProtection
+    - TechSupport
+    - StreamingTV
+    - StreamingMovies
+    - PaperlessBilling
+    - Churn
+
+  # Gender column to encode separately
+  gender_column: "gender"
+
+  # Columns that may contain 'No phone service' or 'No' → should be treated as binary
+  replace_no_phone_service_cols:
+    - MultipleLines
+    - OnlineSecurity
+    - OnlineBackup
+    - DeviceProtection
+    - TechSupport
+    - StreamingTV
+    - StreamingMovies
+
+  # Categorical columns to label encode
+  label_encode_features:
+    - InternetService
+    - Contract
+    - PaymentMethod
+
+  # Columns to convert from object to numeric
+  numeric_columns:
+    - TotalCharges
+
+  # Columns to apply MinMax scaling
+  cols_to_scale:
+    - TotalCharges
+    - tenure
+    - MonthlyCharges
+
+  # PCA settings
+  apply_pca: true
+  pca_n_components: 10
+
+# =======================================
+# Train-Test Split Settings
+# =======================================
+
+split:
+  test_size: 0.2
+  stratify: true
+
+# =======================================
+# Model Hyperparameters
+# =======================================
+
+model_params:
+  logistic_regression:
+    max_iter: 100
+
+  decision_tree:
+    criterion: "gini"
+    max_depth: 500
+
+  decision_tree_entropy:
+    max_depth: 500
+
+  random_forest:
+    criterion: "gini"
+    max_depth: 500
+
+  random_forest_entropy:
+    max_depth: 500
+
+  svm:
+    kernel: "rbf"
+    gamma: 0.5
+    C: 1.0
+
+  knn:
+    n_neighbors: 23
+
+model:
+  test_size: 0.2
+  random_state: 42
+  knn_k_range: 100
